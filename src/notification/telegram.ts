@@ -15,6 +15,7 @@ export function sendTelegramMessage(link: Link, store: Store) {
 
     (async () => {
       const message = Print.productInStock(link);
+      const price = (link.price) ? `${store.currency}${link.price}` : ''
       const results = [];
 
       for (const chatId of telegram.chatId) {
@@ -22,7 +23,7 @@ export function sendTelegramMessage(link: Link, store: Store) {
           results.push(
             client.sendMessage(
               chatId,
-              `${Print.inStock(link, store)}\n${message}`
+              `${Print.inStock(link, store)}\n${message}\nPrice: ${price}`
             )
           );
           logger.info('✔ telegram message sent');
