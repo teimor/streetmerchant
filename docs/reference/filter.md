@@ -56,6 +56,7 @@ Used with the `STORES` variable.
 | AMD | DE | `amd-de`|
 | AMD | IT | `amd-it`|
 | AMD | UK | `amd-uk`|
+| AMD | IL | `amd-il`|
 | AntOnline | US | `antonline`|
 | Argos | UK | `argos`|
 | Argos | IE | `argos-ie`|
