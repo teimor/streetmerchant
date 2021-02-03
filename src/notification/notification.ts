@@ -19,11 +19,12 @@ import {updateRedis} from './redis';
 export function sendNotification(link: Link, store: Store) {
   // Priority
   playSound();
-  sendDiscordMessage(link, store);
+  sendTelegramMessage(link, store);
   sendDesktopNotification(link, store);
   sendEmail(link, store);
   sendSms(link, store);
   // Non-priority
+  sendDiscordMessage(link, store);
   adjustPhilipsHueLights();
   sendMqttMessage(link, store);
   sendPagerDutyNotification(link, store);
