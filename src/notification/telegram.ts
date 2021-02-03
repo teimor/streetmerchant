@@ -9,6 +9,32 @@ const client = new TelegramClient({
   accessToken: telegram.accessToken,
 });
 
+export async function sendGenericTelegramMessage(message: string) {
+  if (telegram.accessToken && telegram.chatId) {
+    logger.debug('↗ sending telegram message');
+
+    (async () => {
+      const results = [];
+
+      for (const chatId of telegram.chatId) {
+        try {
+          results.push(
+            client.sendMessage(
+              chatId,
+              `${message}`
+            )
+          );
+          logger.info('✔ telegram message sent');
+        } catch (error: unknown) {
+          logger.error("✖ couldn't send telegram message", error);
+        }
+      }
+
+      await Promise.all(results);
+    })();
+  }
+}
+
 export function sendTelegramMessage(link: Link, store: Store) {
   if (telegram.accessToken && telegram.chatId) {
     logger.debug('↗ sending telegram message');
