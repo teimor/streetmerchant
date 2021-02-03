@@ -6,7 +6,7 @@ import winston from 'winston';
 const prettyJson = winston.format.printf(info => {
   const timestamp = new Date().toLocaleTimeString();
 
-  let out = `${chalk.grey(`[${timestamp}]`)} ${info.level} ${chalk.grey(
+  let out = `${chalk.dim(`[${timestamp}]`)} ${info.level} ${chalk.dim(
     '::'
   )} ${info.message}`;
 
@@ -233,7 +233,7 @@ function buildSetupString(
   color?: boolean
 ): string {
   if (color) {
-    return chalk.cyan(`[${store.name}]`) + chalk.grey(` [setup (${topic})]`);
+    return chalk.cyan(`[${store.name}]`) + chalk.dim(` [setup (${topic})]`);
   }
 
   return `[${store.name}] [setup (${topic})]`;
@@ -246,12 +246,12 @@ function buildProductString(link: Link, store: Store, color?: boolean): string {
       return (
         chalk.gray(`[${proxy}]`) +
         chalk.cyan(` [${store.name}]`) +
-        chalk.grey(` [${link.brand} (${link.series})] ${link.model}`)
+        chalk.dim(` [${link.brand} (${link.series})] ${link.model}`)
       );
     } else {
       return (
         chalk.cyan(`[${store.name}]`) +
-        chalk.grey(` [${link.brand} (${link.series})] ${link.model}`)
+        chalk.dim(` [${link.brand} (${link.series})] ${link.model}`)
       );
     }
   }
