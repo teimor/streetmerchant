@@ -135,6 +135,7 @@ import {Wipoid} from './wipoid';
 import {Xbox} from './xbox';
 import {Zotac} from './zotac';
 import {logger} from '../../logger';
+import {sendGenericTelegramMessage} from '../../notification/telegram'
 
 export const storeList = new Map([
   [AComPC.name, AComPC],
@@ -301,16 +302,27 @@ function filterBrandsSeriesModels() {
 }
 
 function printConfig() {
+
+  if (config.notifications.telegram.accessToken.length > 0 && config.notifications.telegram.chatId.length > 0) {
+    logger.info('ℹ Telegram Notification is On.');
+    sendGenericTelegramMessage('Bot is connected and running.')
+  }
+
   if (config.store.stores.length > 0) {
     logger.info(
       `ℹ selected stores: ${config.store.stores
         .map(store => store.name)
         .join(', ')}`
     );
-  }
+    sendGenericTelegramMessage(
+      `ℹ selected stores: ${config.store.stores
+      .map(store => store.name)
+      .join(', ')}`)
+  };
 
   if (config.store.showOnlyBrands.length > 0) {
     logger.info(`ℹ selected brands: ${config.store.showOnlyBrands.join(', ')}`);
+    sendGenericTelegramMessage(`ℹ selected brands: ${config.store.showOnlyBrands.join(', ')}`);
   }
 
   if (config.store.showOnlyModels.length > 0) {
@@ -323,10 +335,20 @@ function printConfig() {
         })
         .join(', ')}`
     );
+    sendGenericTelegramMessage(
+      `ℹ selected models: ${config.store.showOnlyModels
+        .map(entry => {
+          return entry.series
+            ? entry.name + ' (' + entry.series + ')'
+            : entry.name;
+        })
+        .join(', ')}`
+    );
   }
 
   if (config.store.showOnlySeries.length > 0) {
     logger.info(`ℹ selected series: ${config.store.showOnlySeries.join(', ')}`);
+    sendGenericTelegramMessage(`ℹ selected series: ${config.store.showOnlySeries.join(', ')}`);
   }
 }
 
